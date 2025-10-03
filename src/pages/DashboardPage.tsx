@@ -174,8 +174,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
                     href={downloadLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    download
                     className="inline-flex items-center justify-center bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition font-medium"
                   >
                     <Download className="w-5 h-5 mr-2" />
@@ -243,8 +242,7 @@ export default function DashboardPage() {
                 </p>
                 <a
                   href={downloadLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  download
                   className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium inline-flex items-center justify-center"
                 >
                   <Download className="w-5 h-5 mr-2" />
@@ -266,8 +264,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
                     href={downloadLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    download
                     className="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium"
                   >
                     <Download className="w-5 h-5 mr-2" />
