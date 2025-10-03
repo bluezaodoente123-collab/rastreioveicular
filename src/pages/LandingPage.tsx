@@ -291,7 +291,7 @@ export default function LandingPage() {
             <div className="bg-white p-6 rounded-xl shadow-md">
               <h3 className="text-lg font-bold text-gray-900 mb-2">O aplicativo funciona em iOS e Android?</h3>
               <p className="text-gray-600">
-                Sim! Nosso aplicativo está disponível para iOS e Android, e também pode ser acessado pelo navegador web.
+                Nosso aplicativo está disponível somente para Android, e também pode ser acessado pelo navegador web, no momento não operamos com iOS.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md">
