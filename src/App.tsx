@@ -8,7 +8,7 @@ import DashboardPage from './pages/DashboardPage';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/rastreioveicular">
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LandingPage />} />
