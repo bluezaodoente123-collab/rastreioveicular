@@ -102,6 +102,15 @@ export default function DashboardPage() {
     try {
       const eventTime = Math.floor(Date.now() / 1000);
       
+      // Hash do email
+      const emailOriginal = user?.email || null;
+      const emailHasheado = emailOriginal ? await hashData(emailOriginal) : null;
+      
+      console.log('📧 Email do usuário:', {
+        original: emailOriginal,
+        hasheado: emailHasheado
+      });
+      
       // Coletar dados do usuário
       const eventData = {
         data: [{
@@ -111,7 +120,7 @@ export default function DashboardPage() {
           event_source_url: window.location.href,
           action_source: 'website',
           user_data: {
-            em: user?.email ? await hashData(user.email) : null,
+            em: emailHasheado,
             client_ip_address: await getClientIP(),
             client_user_agent: navigator.userAgent,
             fbc: getCookie('_fbc'),
