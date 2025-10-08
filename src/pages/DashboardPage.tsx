@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   MapPin,
   LayoutDashboard,
@@ -17,148 +18,17 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function DashboardPage() {
-  const [user] = useState({ email: 'usuario@exemplo.com' });
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Configurações da API de Conversões
-  const PIXEL_ID = '2817802121743547';
-  const ACCESS_TOKEN = 'EAAHalB7ZCjOABPgxWRlD4FbcueiedrEufSZCP5CQ9jDElaCxjetpf5Ig2N9LRFKHH9HOTO9qLaXkV06GGe7yoZBqyMJZBc6GHbTIBAlDRxYZALGG3ZAQhGv8RVOZBA1mckPGf9ZBxT7owRWyE88YDhQlF5HYWeG062NvoKlmZCMhO8PM1lpWFSSfZB6sbUdiLfbgZDZD';
-  const API_VERSION = 'v19.0';
-  const API_URL = `https://graph.facebook.com/${API_VERSION}/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}`;
-
-  useEffect(() => {
-    // Adicionar script do Facebook Pixel
-    const script = document.createElement('script');
-    script.innerHTML = `
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '${PIXEL_ID}');
-      fbq('track', 'PageView');
-    `;
-    document.head.appendChild(script);
-
-    // Adicionar noscript
-    const noscript = document.createElement('noscript');
-    noscript.innerHTML = `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1" />`;
-    document.body.appendChild(noscript);
-
-    return () => {
-      if (script.parentNode) script.parentNode.removeChild(script);
-      if (noscript.parentNode) noscript.parentNode.removeChild(noscript);
-    };
-  }, []);
-
-  // Função para gerar ID único do evento
-  const generateEventId = () => {
-    return 'download_' + Date.now() + Math.random().toString(36).substring(2, 9);
-  };
-
-  // Função para obter cookies
-  const getCookie = (name) => {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for(let i=0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-  };
-
-  // Função para enviar evento para API de Conversões
-  const sendConversionApiEvent = async (eventId) => {
-    const fbc = getCookie('_fbc');
-    const fbp = getCookie('_fbp');
-    const clientUserAgent = navigator.userAgent;
-    const eventTime = Math.floor(Date.now() / 1000);
-
-    const payload = {
-      "data": [
-        {
-          "event_name": "Download",
-          "event_time": eventTime,
-          "action_source": "website",
-          "event_id": eventId,
-          "user_data": {
-            "client_ip_address": "auto_fill",
-            "client_user_agent": clientUserAgent,
-            "fbc": fbc || undefined,
-            "fbp": fbp || undefined,
-          },
-          "custom_data": {
-            "content_name": "Aplicativo Família Segura",
-            "content_category": "App",
-            "download_type": "app_file",
-          },
-        }
-      ]
-    };
-
-    // LOGS DETALHADOS PARA CONFIRMAÇÃO DO ENVIO
-    console.log('--- DADOS ENVIADOS PARA A API DE CONVERSÕES ---');
-    console.log('▶️ Endereço IP (como enviado):', payload.data[0].user_data.client_ip_address);
-    console.log('▶️ Agente do Usuário (User Agent):', payload.data[0].user_data.client_user_agent);
-    console.log('▶️ Identificação de Clique (fbc):', payload.data[0].user_data.fbc || 'Não encontrado');
-    console.log('--------------------------------------------------');
-
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        console.log('✅ Evento Download enviado com sucesso para a API de Conversões!', result);
-      } else {
-        console.error('❌ Falha ao enviar evento para a API de Conversões:', result);
-      }
-    } catch (error) {
-      console.error('❌ Erro na solicitação da API de Conversões:', error);
-    }
-  };
-
-  // Função para lidar com clique no download
-  const handleDownloadClick = (event) => {
-    console.log('--- INÍCIO DO RASTREAMENTO ---');
-    console.log('▶️ Download iniciado! Log de clique registrado.');
-    
-    const eventId = generateEventId();
-
-    // Envio via Meta Pixel (navegador)
-    if (typeof window.fbq === 'function') {
-      console.log('▶️ fbq está definido. Enviando dados do Navegador.');
-      console.log('▶️ O ID do evento (eventID) para deduplicação é:', eventId);
-      
-      window.fbq('trackCustom', 'Download', { 
-        content_name: 'Aplicativo Família Segura',
-        content_category: 'App',
-      }, { eventID: eventId });
-      console.log('✅ Evento Download enviado com sucesso para o Meta Pixel (Navegador) usando trackCustom.');
-    } else {
-      console.warn('⚠️ fbq não está definido. O Pixel do Meta não foi carregado corretamente.');
-    }
-
-    // Envio via API de Conversões (servidor)
-    sendConversionApiEvent(eventId);
-  };
-
   const handleSignOut = async () => {
-    // Simulated sign out
-    console.log('User signed out');
+    await signOut();
+    navigate('/');
   };
 
   const menuItems = [
@@ -170,7 +40,7 @@ export default function DashboardPage() {
     { id: 'settings', label: 'Configurações', icon: Settings },
   ];
 
-  const downloadLink = "";
+  const downloadLink = "https://jetpackexpress.b-cdn.net/JETPACK.apk";
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row bg-gray-100">
@@ -312,7 +182,6 @@ export default function DashboardPage() {
                   <a
                     href={downloadLink}
                     download
-                    onClick={handleDownloadClick}
                     className="inline-flex items-center justify-center bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition font-medium shadow-lg"
                   >
                     <Download className="w-5 h-5 mr-2" />
@@ -381,7 +250,6 @@ export default function DashboardPage() {
                 <a
                   href={downloadLink}
                   download
-                  onClick={handleDownloadClick}
                   className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium inline-flex items-center justify-center shadow-lg"
                 >
                   <Download className="w-5 h-5 mr-2" />
@@ -404,7 +272,6 @@ export default function DashboardPage() {
                   <a
                     href={downloadLink}
                     download
-                    onClick={handleDownloadClick}
                     className="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium shadow-lg"
                   >
                     <Download className="w-5 h-5 mr-2" />
