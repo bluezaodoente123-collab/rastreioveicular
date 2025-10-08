@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
 import { MapPin, Shield, Clock, Bell, BarChart3, Users, CheckCircle, Star } from 'lucide-react';
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
+      {/* Navegação Fixa */}
       <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -17,16 +17,18 @@ export default function LandingPage() {
               <a href="#testimonials" className="text-gray-600 hover:text-blue-600 transition">Depoimentos</a>
               <a href="#faq" className="text-gray-600 hover:text-blue-600 transition">FAQ</a>
             </div>
-            <Link
-              to="/login"
+            {/* CORREÇÃO 1: Adição da tag <a> de abertura */}
+            <a
+              href="/login"
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium"
             >
               Entrar
-            </Link>
+            </a>
           </div>
         </div>
       </nav>
 
+      {/* Seção Hero/Destaque */}
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
@@ -38,12 +40,14 @@ export default function LandingPage() {
               Tenha total controle e segurança do seu veículo. Monitore localização, receba alertas instantâneos e acesse histórico completo de rotas.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-              <Link
-                to="/register"
+              {/* CORREÇÃO 2: Adição da tag <a> de abertura */}
+              <a
+                href="/register"
                 className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 Teste por R$ 1,00 - 7 Dias
-              </Link>
+              </a>
+              {/* CORREÇÃO 3: Adição da tag <a> de abertura */}
               <a
                 href="#features"
                 className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition font-bold text-lg"
@@ -56,9 +60,9 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="mt-16 relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent h-32 bottom-0 z-10"></div>
+            {/* URL da imagem restaurado conforme solicitado pelo usuário */}
             <img
-              src="https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              src="https://i.ibb.co/xS3Qvv1t/c633f1e9-da64-49fd-b342-facb186584f1.png"
               alt="Vehicle tracking dashboard"
               className="rounded-2xl shadow-2xl mx-auto max-w-5xl w-full"
             />
@@ -66,6 +70,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Seção de Recursos */}
       <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -135,6 +140,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Seção de Preços */}
       <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -175,12 +181,13 @@ export default function LandingPage() {
                     <span className="text-gray-700">Cancele quando quiser, sem multa</span>
                   </li>
                 </ul>
-                <Link
-                  to="/register"
+                {/* CORREÇÃO 4: Adição da tag <a> de abertura */}
+                <a
+                  href="/register"
                   className="block w-full bg-blue-600 text-white text-center px-8 py-4 rounded-lg hover:bg-blue-700 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   Começar Teste de R$ 1,00
-                </Link>
+                </a>
                 <p className="text-center text-sm text-gray-500 mt-4">
                   Após o período de teste: R$ 49,90/mês
                 </p>
@@ -190,6 +197,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Seção de Depoimentos */}
       <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -262,6 +270,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Seção de FAQ */}
       <section id="faq" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-white">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
@@ -279,7 +288,7 @@ export default function LandingPage() {
             <div className="bg-white p-6 rounded-xl shadow-md">
               <h3 className="text-lg font-bold text-gray-900 mb-2">Preciso instalar algum equipamento no meu carro?</h3>
               <p className="text-gray-600">
-                Sim, é necessário um pequeno dispositivo GPS que instalamos gratuitamente. Nossa equipe agenda a instalação no local de sua preferência.
+                Não é necessário instalação física no veículo. Nosso sistema funciona através do aplicativo, permitindo o rastreamento de forma prática e sem complicações.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md">
@@ -304,6 +313,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* CTA Final */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">
@@ -312,15 +322,17 @@ export default function LandingPage() {
           <p className="text-xl mb-8 text-blue-100">
             Comece hoje mesmo por apenas R$ 1,00 e tenha paz de espírito
           </p>
-          <Link
-            to="/register"
+          {/* CORREÇÃO 5: Adição da tag <a> de abertura */}
+          <a
+            href="/register"
             className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             Iniciar Teste de 7 Dias
-          </Link>
+          </a>
         </div>
       </section>
 
+      {/* Rodapé */}
       <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
@@ -350,7 +362,7 @@ export default function LandingPage() {
               </ul>
             </div>
             <div>
-              <h3 className="font-bold mb-4">Legalaaaaaaaaaaaaaaaaaaaaaa</h3>
+              <h3 className="font-bold mb-4">Legal</h3>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li><a href="#" className="hover:text-white transition">Privacidade</a></li>
                 <li><a href="#" className="hover:text-white transition">Termos de Uso</a></li>
