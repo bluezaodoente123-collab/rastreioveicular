@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'; // <--- O Link foi restaurado aqui!
 import { MapPin, Shield, Clock, Bell, BarChart3, Users, CheckCircle, Star } from 'lucide-react';
 
 export default function LandingPage() {
@@ -12,18 +13,19 @@ export default function LandingPage() {
               <span className="text-xl font-bold text-gray-900">RastreioVeicular</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
+              {/* Links de navegação interna (scroll) */}
               <a href="#features" className="text-gray-600 hover:text-blue-600 transition">Recursos</a>
               <a href="#pricing" className="text-gray-600 hover:text-blue-600 transition">Preços</a>
               <a href="#testimonials" className="text-gray-600 hover:text-blue-600 transition">Depoimentos</a>
               <a href="#faq" className="text-gray-600 hover:text-blue-600 transition">FAQ</a>
             </div>
-            {/* CORREÇÃO 1: Adição da tag <a> de abertura */}
-            <a
-              href="/login"
+            {/* Link para a rota /login */}
+            <Link
+              to="/login"
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium"
             >
               Entrar
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
@@ -40,14 +42,13 @@ export default function LandingPage() {
               Tenha total controle e segurança do seu veículo. Monitore localização, receba alertas instantâneos e acesse histórico completo de rotas.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-              {/* CORREÇÃO 2: Adição da tag <a> de abertura */}
-              <a
-                href="/register"
+              {/* Link para a rota /register */}
+              <Link
+                to="/register"
                 className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 Teste por R$ 1,00 - 7 Dias
-              </a>
-              {/* CORREÇÃO 3: Adição da tag <a> de abertura */}
+              </Link>
               <a
                 href="#features"
                 className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition font-bold text-lg"
@@ -60,7 +61,7 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="mt-16 relative">
-            {/* URL da imagem restaurado conforme solicitado pelo usuário */}
+            {/* URL da imagem correta */}
             <img
               src="https://i.ibb.co/xS3Qvv1t/c633f1e9-da64-49fd-b342-facb186584f1.png"
               alt="Vehicle tracking dashboard"
@@ -181,13 +182,13 @@ export default function LandingPage() {
                     <span className="text-gray-700">Cancele quando quiser, sem multa</span>
                   </li>
                 </ul>
-                {/* CORREÇÃO 4: Adição da tag <a> de abertura */}
-                <a
-                  href="/register"
+                {/* Link para a rota /register */}
+                <Link
+                  to="/register"
                   className="block w-full bg-blue-600 text-white text-center px-8 py-4 rounded-lg hover:bg-blue-700 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   Começar Teste de R$ 1,00
-                </a>
+                </Link>
                 <p className="text-center text-sm text-gray-500 mt-4">
                   Após o período de teste: R$ 49,90/mês
                 </p>
@@ -322,13 +323,13 @@ export default function LandingPage() {
           <p className="text-xl mb-8 text-blue-100">
             Comece hoje mesmo por apenas R$ 1,00 e tenha paz de espírito
           </p>
-          {/* CORREÇÃO 5: Adição da tag <a> de abertura */}
-          <a
-            href="/register"
+          {/* Link para a rota /register */}
+          <Link
+            to="/register"
             className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             Iniciar Teste de 7 Dias
-          </a>
+          </Link>
         </div>
       </section>
 
