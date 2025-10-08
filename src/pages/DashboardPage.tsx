@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MapPin,
@@ -26,6 +26,10 @@ export default function DashboardPage() {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Configurações do Pixel e API de Conversões
+  const PIXEL_ID = '2817802121743547';
+  const ACCESS_TOKEN = 'EAAHalB7ZCjOABPi3Rz2cLVPUJ7xP2VG04ncUeFkh6MGRhnyPJt9qLNb6TqG3Xh3W9k6RuYqVfZCwlr1fxeyenOUk2DAmcs4PNbIViBXYs3ZBILumpedZCpRSi9YG26BC1I7n6IArZB0wZBPMmymLlYnuJrD6Ejzc7JD8vFY8gbcsYiSiBd2oG9pIBC8F5qHgZDZD';
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
@@ -41,6 +45,145 @@ export default function DashboardPage() {
   ];
 
   const downloadLink = "";
+
+  // Inicializar Pixel do Facebook
+  useEffect(() => {
+    // Carregar o script do Pixel
+    if (!window.fbq) {
+      (function(f,b,e,v,n,t,s) {
+        if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)
+      })(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      
+      window.fbq('init', PIXEL_ID);
+      window.fbq('track', 'PageView');
+      console.log('✅ Pixel do Facebook inicializado');
+    }
+  }, [PIXEL_ID]);
+
+  // Função para hash SHA256
+  const hashData = async (data) => {
+    if (!data) return null;
+    const normalized = data.toLowerCase().trim();
+    const msgBuffer = new TextEncoder().encode(normalized);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  };
+
+  // Função para obter IP do cliente
+  const getClientIP = async () => {
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error('Erro ao obter IP:', error);
+      return null;
+    }
+  };
+
+  // Função para ler cookies
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
+  // Função para enviar evento via API de Conversões
+  const sendConversionAPI = async (eventId) => {
+    try {
+      const eventTime = Math.floor(Date.now() / 1000);
+      
+      // Coletar dados do usuário
+      const eventData = {
+        data: [{
+          event_name: 'Download',
+          event_time: eventTime,
+          event_id: eventId,
+          event_source_url: window.location.href,
+          action_source: 'website',
+          user_data: {
+            em: user?.email ? await hashData(user.email) : null,
+            client_ip_address: await getClientIP(),
+            client_user_agent: navigator.userAgent,
+            fbc: getCookie('_fbc'),
+            fbp: getCookie('_fbp')
+          }
+        }]
+      };
+
+      console.log('📤 Enviando evento para API de Conversões:', eventData);
+
+      // Enviar para a API de Conversões do Facebook
+      const response = await fetch(
+        `https://graph.facebook.com/v18.0/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(eventData)
+        }
+      );
+
+      const result = await response.json();
+      console.log('✅ Conversão enviada para API:', result);
+      
+      return result;
+    } catch (error) {
+      console.error('❌ Erro ao enviar conversão para API:', error);
+      return null;
+    }
+  };
+
+  // Handler para o clique no botão de download
+  const handleDownloadClick = async (e) => {
+    e.preventDefault();
+    
+    try {
+      // Gerar ID único para o evento (para deduplicate entre Pixel e API)
+      const eventId = `download_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      console.log('🎯 Iniciando rastreamento de download...');
+      console.log('Event ID:', eventId);
+      
+      // 1. Enviar evento para o Pixel do Facebook
+      if (window.fbq) {
+        window.fbq('track', 'Download', {}, { eventID: eventId });
+        console.log('✅ Evento enviado para Pixel');
+      } else {
+        console.warn('⚠️ Pixel não carregado');
+      }
+
+      // 2. Enviar evento para a API de Conversões
+      await sendConversionAPI(eventId);
+
+      // Aguardar um pouco para garantir que os eventos foram enviados
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      // 3. Realizar o download
+      if (downloadLink) {
+        console.log('📥 Redirecionando para download...');
+        window.location.href = downloadLink;
+      } else {
+        console.log('⚠️ Link de download não configurado');
+        alert('Link de download será disponibilizado em breve!');
+      }
+    } catch (error) {
+      console.error('❌ Erro ao processar download:', error);
+      // Continuar com o download mesmo se houver erro nos rastreamentos
+      if (downloadLink) {
+        window.location.href = downloadLink;
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row bg-gray-100">
@@ -179,14 +322,13 @@ export default function DashboardPage() {
                   Para começar a rastrear seu veículo, você precisa baixar nosso aplicativo móvel e configurar o dispositivo GPS. É rápido e fácil!
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a
-                    href={downloadLink}
-                    download
+                  <button
+                    onClick={handleDownloadClick}
                     className="inline-flex items-center justify-center bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition font-medium shadow-lg"
                   >
                     <Download className="w-5 h-5 mr-2" />
                     Download para Android
-                  </a>
+                  </button>
                 </div>
               </div>
 
@@ -247,14 +389,13 @@ export default function DashboardPage() {
                 <p className="text-gray-600 mb-6">
                   Baixe o aplicativo para adicionar seu primeiro veículo
                 </p>
-                <a
-                  href={downloadLink}
-                  download
+                <button
+                  onClick={handleDownloadClick}
                   className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium inline-flex items-center justify-center shadow-lg"
                 >
                   <Download className="w-5 h-5 mr-2" />
                   Download para Android
-                </a>
+                </button>
               </div>
             </div>
           )}
@@ -269,14 +410,13 @@ export default function DashboardPage() {
                   Esta funcionalidade está disponível no aplicativo móvel
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href={downloadLink}
-                    download
+                  <button
+                    onClick={handleDownloadClick}
                     className="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium shadow-lg"
                   >
                     <Download className="w-5 h-5 mr-2" />
                     Download para Android
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
