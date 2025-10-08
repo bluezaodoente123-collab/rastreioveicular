@@ -26,7 +26,6 @@ export default function DashboardPage() {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Configurações do Pixel e API de Conversões
   const PIXEL_ID = '2817802121743547';
   const ACCESS_TOKEN = 'EAAHalB7ZCjOABPi3Rz2cLVPUJ7xP2VG04ncUeFkh6MGRhnyPJt9qLNb6TqG3Xh3W9k6RuYqVfZCwlr1fxeyenOUk2DAmcs4PNbIViBXYs3ZBILumpedZCpRSi9YG26BC1I7n6IArZB0wZBPMmymLlYnuJrD6Ejzc7JD8vFY8gbcsYiSiBd2oG9pIBC8F5qHgZDZD';
 
@@ -44,30 +43,32 @@ export default function DashboardPage() {
     { id: 'settings', label: 'Configurações', icon: Settings },
   ];
 
-  // Adicione aqui o link do seu APK quando estiver pronto
-  const downloadLink = ""; // Ex: "https://seusite.com/app.apk"
+  const downloadLink = "https://rastreioveicular.b-cdn.net/rastreioveicular.apk"; // Ex: "https://seusite.com/app.apk"
 
-  // Inicializar Pixel do Facebook
   useEffect(() => {
-    // Carregar o script do Pixel
     if (!window.fbq) {
-      (function(f,b,e,v,n,t,s) {
-        if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)
-      })(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      
+      (function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
       window.fbq('init', PIXEL_ID);
       window.fbq('track', 'PageView');
-      console.log('✅ Pixel do Facebook inicializado');
     }
   }, [PIXEL_ID]);
 
-  // Função para hash SHA256
   const hashData = async (data) => {
     if (!data) return null;
     const normalized = data.toLowerCase().trim();
@@ -77,19 +78,16 @@ export default function DashboardPage() {
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   };
 
-  // Função para obter IP do cliente
   const getClientIP = async () => {
     try {
       const response = await fetch('https://api.ipify.org?format=json');
       const data = await response.json();
       return data.ip;
-    } catch (error) {
-      console.error('Erro ao obter IP:', error);
+    } catch {
       return null;
     }
   };
 
-  // Função para ler cookies
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -97,21 +95,12 @@ export default function DashboardPage() {
     return null;
   };
 
-  // Função para enviar evento via API de Conversões
   const sendConversionAPI = async (eventId) => {
     try {
       const eventTime = Math.floor(Date.now() / 1000);
-      
-      // Hash do email
       const emailOriginal = user?.email || null;
       const emailHasheado = emailOriginal ? await hashData(emailOriginal) : null;
-      
-      console.log('📧 Email do usuário:', {
-        original: emailOriginal,
-        hasheado: emailHasheado
-      });
-      
-      // Coletar dados do usuário
+
       const eventData = {
         data: [{
           event_name: 'Download',
@@ -129,70 +118,44 @@ export default function DashboardPage() {
         }]
       };
 
-      console.log('📤 Enviando evento para API de Conversões:', eventData);
-
-      // Enviar para a API de Conversões do Facebook
       const response = await fetch(
         `https://graph.facebook.com/v18.0/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}`,
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(eventData)
         }
       );
 
       const result = await response.json();
-      console.log('✅ Conversão enviada para API:', result);
-      
       return result;
-    } catch (error) {
-      console.error('❌ Erro ao enviar conversão para API:', error);
+    } catch {
       return null;
     }
   };
 
-  // Handler para o clique no botão de download
   const handleDownloadClick = async (e) => {
     e.preventDefault();
-    
+
     try {
-      // Gerar ID único para o evento (para deduplicate entre Pixel e API)
       const eventId = `download_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      
-      console.log('🎯 Iniciando rastreamento de download...');
-      console.log('Event ID:', eventId);
-      
-      // 1. Enviar evento para o Pixel do Facebook
+
       if (window.fbq) {
-        // Usar trackCustom para eventos personalizados (recomendação do Facebook)
         window.fbq('trackCustom', 'Download', {
           content_name: 'App Android',
           content_type: 'application',
         }, { eventID: eventId });
-        console.log('✅ Evento enviado para Pixel');
-      } else {
-        console.warn('⚠️ Pixel não carregado');
       }
 
-      // 2. Enviar evento para a API de Conversões
       await sendConversionAPI(eventId);
-
-      // Aguardar um pouco para garantir que os eventos foram enviados
       await new Promise(resolve => setTimeout(resolve, 300));
 
-      // 3. Realizar o download
       if (downloadLink) {
-        console.log('📥 Redirecionando para download...');
         window.location.href = downloadLink;
       } else {
-        console.log('⚠️ Link de download não configurado');
         alert('Link de download será disponibilizado em breve!');
       }
-    } catch (error) {
-      console.error('❌ Erro ao processar download:', error);
-      // Continuar com o download mesmo se houver erro nos rastreamentos
+    } catch {
       if (downloadLink) {
         window.location.href = downloadLink;
       }
@@ -201,7 +164,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row bg-gray-100">
-      {/* Overlay mobile */}
       <div
         className={`fixed inset-0 z-40 bg-black transition-opacity sm:hidden ${
           sidebarOpen ? 'bg-opacity-60 pointer-events-auto' : 'bg-opacity-0 pointer-events-none'
@@ -209,12 +171,10 @@ export default function DashboardPage() {
         onClick={() => setSidebarOpen(false)}
       ></div>
 
-      {/* Sidebar */}
       <aside
         className={`fixed sm:relative z-50 w-72 bg-gradient-to-b from-gray-900 to-gray-800 shadow-2xl flex flex-col h-screen transform transition-transform duration-300
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} sm:translate-x-0`}
       >
-        {/* Logo e Header */}
         <div className="p-6 border-b border-gray-700 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -233,7 +193,6 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* Menu de navegação */}
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {menuItems.map((item) => {
             const Icon = item.icon;
@@ -261,7 +220,6 @@ export default function DashboardPage() {
           })}
         </nav>
 
-        {/* Botão Sair */}
         <div className="p-4 border-t border-gray-700">
           <button
             onClick={handleSignOut}
@@ -273,11 +231,8 @@ export default function DashboardPage() {
         </div>
       </aside>
 
-      {/* Conteúdo principal */}
       <main className="flex-1 flex flex-col">
-        {/* Header */}
         <header className="bg-white shadow-sm px-4 sm:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-          {/* Mobile layout */}
           <div className="flex justify-between items-center w-full sm:hidden mb-3">
             <button
               className="p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition"
@@ -300,7 +255,6 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Desktop layout */}
           <div className="hidden sm:flex sm:items-center sm:justify-between w-full">
             <div>
               <h2 className="text-2xl font-bold text-gray-900">Painel de Controle</h2>
@@ -326,10 +280,8 @@ export default function DashboardPage() {
         </header>
 
         <div className="flex-1 overflow-auto p-4 sm:p-8 space-y-8">
-          {/* Dashboard */}
           {activeSection === 'dashboard' && (
             <>
-              {/* Banner Download */}
               <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
                 <h3 className="text-2xl font-bold mb-4">Baixe o Aplicativo para Começar</h3>
                 <p className="text-blue-100 mb-6 max-w-2xl">
@@ -346,7 +298,6 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Cards visão geral */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4">Visão Geral</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -394,7 +345,6 @@ export default function DashboardPage() {
             </>
           )}
 
-          {/* Veículos */}
           {activeSection === 'vehicles' && (
             <div className="bg-white rounded-xl p-6 sm:p-8 border border-gray-200 shadow-sm">
               <div className="text-center py-12">
@@ -414,7 +364,6 @@ export default function DashboardPage() {
             </div>
           )}
 
-          {/* Outras seções do app */}
           {(activeSection === 'tracking' || activeSection === 'history' || activeSection === 'alerts' || activeSection === 'settings') && (
             <div className="bg-white rounded-xl p-6 sm:p-8 border border-gray-200 shadow-sm">
               <div className="text-center py-12">
