@@ -44,7 +44,8 @@ export default function DashboardPage() {
     { id: 'settings', label: 'Configurações', icon: Settings },
   ];
 
-  const downloadLink = "";
+  // Adicione aqui o link do seu APK quando estiver pronto
+  const downloadLink = ""; // Ex: "https://seusite.com/app.apk"
 
   // Inicializar Pixel do Facebook
   useEffect(() => {
@@ -156,7 +157,11 @@ export default function DashboardPage() {
       
       // 1. Enviar evento para o Pixel do Facebook
       if (window.fbq) {
-        window.fbq('track', 'Download', {}, { eventID: eventId });
+        // Usar trackCustom para eventos personalizados (recomendação do Facebook)
+        window.fbq('trackCustom', 'Download', {
+          content_name: 'App Android',
+          content_type: 'application',
+        }, { eventID: eventId });
         console.log('✅ Evento enviado para Pixel');
       } else {
         console.warn('⚠️ Pixel não carregado');
