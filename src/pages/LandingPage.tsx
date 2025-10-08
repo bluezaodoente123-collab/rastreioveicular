@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'; // <--- O Link foi restaurado aqui!
+import { Link } from 'react-router-dom';
 import { MapPin, Shield, Clock, Bell, BarChart3, Users, CheckCircle, Star } from 'lucide-react';
 
 export default function LandingPage() {
@@ -13,13 +13,11 @@ export default function LandingPage() {
               <span className="text-xl font-bold text-gray-900">RastreioVeicular</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              {/* Links de navegação interna (scroll) */}
               <a href="#features" className="text-gray-600 hover:text-blue-600 transition">Recursos</a>
               <a href="#pricing" className="text-gray-600 hover:text-blue-600 transition">Preços</a>
               <a href="#testimonials" className="text-gray-600 hover:text-blue-600 transition">Depoimentos</a>
               <a href="#faq" className="text-gray-600 hover:text-blue-600 transition">FAQ</a>
             </div>
-            {/* Link para a rota /login */}
             <Link
               to="/login"
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium"
@@ -42,7 +40,6 @@ export default function LandingPage() {
               Tenha total controle e segurança do seu veículo. Monitore localização, receba alertas instantâneos e acesse histórico completo de rotas.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-              {/* Link para a rota /register */}
               <Link
                 to="/register"
                 className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
@@ -61,7 +58,6 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="mt-16 relative">
-            {/* URL da imagem correta */}
             <img
               src="https://i.ibb.co/xS3Qvv1t/c633f1e9-da64-49fd-b342-facb186584f1.png"
               alt="Vehicle tracking dashboard"
@@ -182,7 +178,6 @@ export default function LandingPage() {
                     <span className="text-gray-700">Cancele quando quiser, sem multa</span>
                   </li>
                 </ul>
-                {/* Link para a rota /register */}
                 <Link
                   to="/register"
                   className="block w-full bg-blue-600 text-white text-center px-8 py-4 rounded-lg hover:bg-blue-700 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
@@ -310,6 +305,12 @@ export default function LandingPage() {
                 Temos equipe de suporte 24/7 para auxiliar em casos de roubo. Trabalhamos junto às autoridades para recuperação do veículo.
               </p>
             </div>
+            <div className="bg-white p-6 rounded-xl shadow-md">
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Onde a empresa está localizada?</h3>
+              <p className="text-gray-600">
+                Nossa sede fica em Belo Horizonte/MG, na R. Beira Mar, 180 - Urca, CEP 31360-290. CNPJ: 35.913.907/0001-26.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -323,7 +324,6 @@ export default function LandingPage() {
           <p className="text-xl mb-8 text-blue-100">
             Comece hoje mesmo por apenas R$ 1,00 e tenha paz de espírito
           </p>
-          {/* Link para a rota /register */}
           <Link
             to="/register"
             className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
@@ -361,6 +361,12 @@ export default function LandingPage() {
                 <li><a href="#" className="hover:text-white transition">Contato</a></li>
                 <li><a href="#" className="hover:text-white transition">Suporte</a></li>
               </ul>
+              <div className="mt-4 text-xs text-gray-500">
+                <p>R. Beira Mar, 180</p>
+                <p>Urca - Belo Horizonte/MG</p>
+                <p>CEP 31360-290</p>
+                <p className="mt-2">CNPJ: 35.913.907/0001-26</p>
+              </div>
             </div>
             <div>
               <h3 className="font-bold mb-4">Legal</h3>
