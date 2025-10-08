@@ -8,7 +8,7 @@ import DashboardPage from './pages/DashboardPage';
 
 function App() {
   return (
-    <BrowserRouter basename="/rastreioveicular">
+    <BrowserRouter> {/* ✅ Removido o basename */}
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LandingPage />} />
