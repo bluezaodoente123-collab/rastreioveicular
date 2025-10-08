@@ -59,7 +59,7 @@ export default function LandingPage() {
           </div>
           <div className="mt-16 relative">
             <img
-              src="https://i.ibb.co/xS3Qvv1t/c633f1e9-da64-49fd-b342-facb186584f1.png"
+              src="https://i.ibb.co/KjzQ1JZ1/rastreio-veicular-horizontal.png"
               alt="Vehicle tracking dashboard"
               className="rounded-2xl shadow-2xl mx-auto max-w-5xl w-full"
             />
