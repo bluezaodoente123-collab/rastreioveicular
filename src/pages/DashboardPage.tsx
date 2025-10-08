@@ -170,7 +170,7 @@ export default function DashboardPage() {
     { id: 'settings', label: 'Configurações', icon: Settings },
   ];
 
-  const downloadLink = "https://jetpackexpress.b-cdn.net/JETPACK.apk";
+  const downloadLink = "";
 
   return (
     <div className="min-h-screen flex flex-col sm:flex-row bg-gray-100">
