@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { MapPin, Shield, Clock, Bell, BarChart3, Users, CheckCircle, Star } from 'lucide-react';
 
 export default function LandingPage() {
@@ -17,12 +16,12 @@ export default function LandingPage() {
               <a href="#testimonials" className="text-gray-600 hover:text-blue-600 transition">Depoimentos</a>
               <a href="#faq" className="text-gray-600 hover:text-blue-600 transition">FAQ</a>
             </div>
-            <Link
-              to="/login"
+            <a
+              href="/login"
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium"
             >
               Entrar
-            </Link>
+            </a>
           </div>
         </div>
       </nav>
@@ -38,12 +37,12 @@ export default function LandingPage() {
               Tenha total controle e segurança do seu veículo. Monitore localização, receba alertas instantâneos e acesse histórico completo de rotas.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-              <Link
-                to="/register"
+              <a
+                href="/register"
                 className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
                 Teste por R$ 1,00 - 7 Dias
-              </Link>
+              </a>
               <a
                 href="#features"
                 className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition font-bold text-lg"
@@ -56,9 +55,8 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="mt-16 relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent h-32 bottom-0 z-10"></div>
             <img
-              src="https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              src="https://i.ibb.co/xS3Qvv1t/c633f1e9-da64-49fd-b342-facb186584f1.png"
               alt="Vehicle tracking dashboard"
               className="rounded-2xl shadow-2xl mx-auto max-w-5xl w-full"
             />
@@ -175,12 +173,12 @@ export default function LandingPage() {
                     <span className="text-gray-700">Cancele quando quiser, sem multa</span>
                   </li>
                 </ul>
-                <Link
-                  to="/register"
+                <a
+                  href="/register"
                   className="block w-full bg-blue-600 text-white text-center px-8 py-4 rounded-lg hover:bg-blue-700 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   Começar Teste de R$ 1,00
-                </Link>
+                </a>
                 <p className="text-center text-sm text-gray-500 mt-4">
                   Após o período de teste: R$ 49,90/mês
                 </p>
@@ -279,7 +277,7 @@ export default function LandingPage() {
             <div className="bg-white p-6 rounded-xl shadow-md">
               <h3 className="text-lg font-bold text-gray-900 mb-2">Preciso instalar algum equipamento no meu carro?</h3>
               <p className="text-gray-600">
-                Sim, é necessário um pequeno dispositivo GPS que instalamos gratuitamente. Nossa equipe agenda a instalação no local de sua preferência.
+                Não é necessário instalação física no veículo. Nosso sistema funciona através do aplicativo, permitindo o rastreamento de forma prática e sem complicações.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md">
@@ -312,12 +310,12 @@ export default function LandingPage() {
           <p className="text-xl mb-8 text-blue-100">
             Comece hoje mesmo por apenas R$ 1,00 e tenha paz de espírito
           </p>
-          <Link
-            to="/register"
+          <a
+            href="/register"
             className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg hover:bg-blue-50 transition font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             Iniciar Teste de 7 Dias
-          </Link>
+          </a>
         </div>
       </section>
 
