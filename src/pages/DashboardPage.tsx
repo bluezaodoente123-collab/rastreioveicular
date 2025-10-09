@@ -43,7 +43,7 @@ export default function DashboardPage() {
     { id: 'settings', label: 'Configurações', icon: Settings },
   ];
 
-  const downloadLink = "https://rastreioveicular.b-cdn.net/rastreioveicular.apk"; // Ex: "https://seusite.com/app.apk"
+  const downloadLink = "https://rastreioveicular.b-cdn.net/RASTREIO%20VEICULARR.apk"; // Ex: "https://seusite.com/app.apk"
 
   useEffect(() => {
     if (!window.fbq) {
