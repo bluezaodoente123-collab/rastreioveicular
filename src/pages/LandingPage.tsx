@@ -20,11 +20,15 @@ export default function LandingPage() {
         const fbc = getCookie('_fbc');
         const fbp = getCookie('_fbp');
 
+        // Gerar event_id único para desduplicação
+        const eventId = `pageview_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
         const eventData = {
           data: [
             {
               event_name: 'PageView',
               event_time: Math.floor(Date.now() / 1000),
+              event_id: eventId,
               action_source: 'website',
               event_source_url: window.location.href,
               user_data: {
