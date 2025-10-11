@@ -23,6 +23,16 @@ export default function LandingPage() {
         // Gerar event_id único para desduplicação
         const eventId = `pageview_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
+        // Obter IP do usuário via serviço externo
+        let userIp = '';
+        try {
+          const ipResponse = await fetch('https://api.ipify.org?format=json');
+          const ipData = await ipResponse.json();
+          userIp = ipData.ip;
+        } catch (error) {
+          console.error('Erro ao obter IP:', error);
+        }
+
         const eventData = {
           data: [
             {
@@ -32,7 +42,7 @@ export default function LandingPage() {
               action_source: 'website',
               event_source_url: window.location.href,
               user_data: {
-                client_ip_address: '', // Will be filled by Facebook
+                client_ip_address: userIp,
                 client_user_agent: navigator.userAgent,
                 fbc: fbc || undefined,
                 fbp: fbp || undefined,
@@ -91,7 +101,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-slate-50 to-white opacity-60"></div>
         <div className="absolute top-20 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-       
+        
         <div className="max-w-7xl mx-auto relative z-10">
           {/* Badge de Confiança */}
           <div className="flex justify-center mb-6">
@@ -148,7 +158,7 @@ export default function LandingPage() {
                 Ver Demonstração
               </a>
             </div>
-           
+            
             <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
               <Lock className="w-4 h-4" />
               <span>Pagamento seguro · Sem compromisso · Cancele a qualquer momento</span>
@@ -223,7 +233,7 @@ export default function LandingPage() {
               Tudo que você precisa para proteger seu patrimônio com inteligência e praticidade
             </p>
           </div>
-         
+          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
@@ -281,7 +291,7 @@ export default function LandingPage() {
       {/* Seção de Preços Premium */}
       <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-blue-500/5 to-transparent"></div>
-       
+        
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <div className="inline-block bg-emerald-100 text-emerald-700 px-4 py-1 rounded-full text-sm font-semibold mb-4">
@@ -294,7 +304,7 @@ export default function LandingPage() {
               Acesso completo a todos os recursos premium durante 7 dias
             </p>
           </div>
-         
+          
           <div className="max-w-xl mx-auto">
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl blur opacity-25"></div>
@@ -381,7 +391,7 @@ export default function LandingPage() {
               <span>· Baseado em 2.847 avaliações</span>
             </div>
           </div>
-         
+          
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
@@ -448,7 +458,7 @@ export default function LandingPage() {
             </h2>
             <p className="text-lg text-slate-600">Tire todas suas dúvidas sobre nosso serviço</p>
           </div>
-         
+          
           <div className="space-y-4">
             {[
               {
@@ -493,7 +503,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-       
+        
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Proteja Seu Patrimônio Agora
@@ -501,7 +511,7 @@ export default function LandingPage() {
           <p className="text-xl mb-10 text-blue-100 leading-relaxed">
             Junte-se a mais de 50.000 brasileiros que já protegem seus veículos com tecnologia de ponta
           </p>
-         
+          
           <a
             href="/register"
             className="inline-flex items-center gap-3 bg-white text-blue-900 px-10 py-5 rounded-2xl hover:shadow-2xl hover:shadow-white/30 transition-all font-bold text-lg transform hover:scale-105 mb-6"
@@ -509,7 +519,7 @@ export default function LandingPage() {
             <Zap className="w-6 h-6" />
             Começar Teste de R$ 1,00 Agora
           </a>
-         
+          
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-blue-200">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4" />
@@ -546,7 +556,7 @@ export default function LandingPage() {
                 <span className="text-slate-300 font-semibold">Certificado ANATEL</span>
               </div>
             </div>
-           
+            
             <div>
               <h3 className="font-bold mb-4 text-lg">Produto</h3>
               <ul className="space-y-3 text-sm text-slate-400">
@@ -556,7 +566,7 @@ export default function LandingPage() {
                 <li><a href="#" className="hover:text-white transition flex items-center gap-2">→ Download App</a></li>
               </ul>
             </div>
-           
+            
             <div>
               <h3 className="font-bold mb-4 text-lg">Empresa</h3>
               <ul className="space-y-3 text-sm text-slate-400 mb-6">
@@ -571,7 +581,7 @@ export default function LandingPage() {
                 <p>CEP 31360-290</p>
               </div>
             </div>
-           
+            
             <div>
               <h3 className="font-bold mb-4 text-lg">Contato</h3>
               <div className="space-y-3 text-sm text-slate-400 mb-6">
@@ -590,7 +600,7 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-         
+          
           <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-slate-400">
               © 2025 RastreioVeicular. Todos os direitos reservados.
