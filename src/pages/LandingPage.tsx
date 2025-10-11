@@ -19,7 +19,7 @@ export default function LandingPage() {
               <a href="#testimonials" className="text-slate-700 hover:text-blue-600 transition font-medium">Depoimentos</a>
               <a href="#faq" className="text-slate-700 hover:text-blue-600 transition font-medium">FAQ</a>
               <Phone className="w-4 h-4 text-slate-400" />
-              <span className="text-slate-700 font-semibold">(31) 3333-3333</span>
+              <span className="text-slate-700 font-semibold">(11) 97551-5049</span>
             </div>
             <a
               href="/login"
@@ -507,7 +507,7 @@ export default function LandingPage() {
               <div className="space-y-3 text-sm text-slate-400 mb-6">
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  <span>(31) 3333-3333</span>
+                  <span>(11) 97551-5049</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
