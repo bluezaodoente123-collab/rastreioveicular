@@ -19,11 +19,11 @@ export default function LandingPage() {
               <a href="#testimonials" className="text-slate-700 hover:text-blue-600 transition font-medium">Depoimentos</a>
               <a href="#faq" className="text-slate-700 hover:text-blue-600 transition font-medium">FAQ</a>
               <Phone className="w-4 h-4 text-slate-400" />
-              <span className="text-slate-700 font-semibold">(11) 97551-5049</span>
+              <span className="text-slate-700 font-semibold">(31) 3333-3333</span>
             </div>
             <a
               href="/login"
-              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2.5 rounded-xl hover:shadow-lg hover:shadow-blue-500/50 transition-all font-semibold"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl hover:shadow-lg hover:shadow-blue-500/50 transition-all font-semibold text-sm sm:text-base whitespace-nowrap"
             >
               Área do Cliente
             </a>
@@ -100,16 +100,27 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Dashboard Preview com melhor apresentação */}
+          {/* Dashboard Preview com vídeo de demonstração */}
           <div className="mt-20 relative">
             <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 pointer-events-none"></div>
-            <div className="relative">
+            <div className="relative flex justify-center">
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl blur-2xl"></div>
-              <img
-                src="https://i.ibb.co/7dwnMVXr/rastreio-veicular-post-instagram.png"
-                alt="Dashboard de rastreamento profissional"
-                className="relative rounded-3xl shadow-2xl mx-auto max-w-5xl w-full border-4 border-white"
-              />
+              <div className="relative max-w-sm mx-auto">
+                <video
+                  className="relative rounded-3xl shadow-2xl w-full border-4 border-white"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster="https://via.placeholder.com/384x832/1e293b/ffffff?text=Carregando..."
+                >
+                  <source src="https://ia600604.us.archive.org/19/items/whats-app-video-2025-10-11-at-12.11.29-feb-434ac/WhatsApp%20Video%202025-10-11%20at%2012.11.29_feb434ac.mp4" type="video/mp4" />
+                  Seu navegador não suporta vídeos.
+                </video>
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-6 py-3 rounded-full shadow-lg border-2 border-blue-600">
+                  <p className="text-sm font-bold text-slate-900">🎥 Demonstração em vídeo</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -237,7 +248,7 @@ export default function LandingPage() {
                 <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-10 text-center relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20"></div>
                   <div className="relative">
-                    <h3 className="text-2xl font-bold mb-3">Plano Premium</h3>
+                    <h3 className="text-2xl font-bold mb-3">Plano Teste</h3>
                     <div className="flex items-center justify-center gap-3 mb-2">
                       <span className="text-5xl font-bold">R$ 1</span>
                       <div className="text-left">
@@ -507,7 +518,7 @@ export default function LandingPage() {
               <div className="space-y-3 text-sm text-slate-400 mb-6">
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  <span>(11) 97551-5049</span>
+                  <span>(31) 3333-3333</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
