@@ -87,7 +87,7 @@ export default function LandingPage() {
                 Teste 7 Dias por R$ 1,00
               </a>
               <a
-                href="#features"
+                href="#demo-video"
                 className="border-2 border-slate-300 text-slate-700 px-10 py-5 rounded-2xl hover:bg-slate-50 hover:border-slate-400 transition-all font-semibold text-lg"
               >
                 Ver Demonstração
@@ -101,25 +101,25 @@ export default function LandingPage() {
           </div>
 
           {/* Dashboard Preview com vídeo de demonstração */}
-          <div className="mt-20 relative">
+          <div id="demo-video" className="mt-20 relative pt-12">
             <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 pointer-events-none"></div>
             <div className="relative flex justify-center">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl blur-2xl"></div>
               <div className="relative max-w-sm mx-auto">
                 <video
-                  className="relative rounded-3xl shadow-2xl w-full border-4 border-white"
-                  autoPlay
+                  className="relative rounded-3xl shadow-2xl w-full border-4 border-white cursor-pointer"
+                  autoPlay={true}          {/* AUTOPLAY LIGADO */}
                   loop
-                  muted
-                  playsInline
-                  poster="https://via.placeholder.com/384x832/1e293b/ffffff?text=Carregando..."
+                  muted                    {/* MUDO (Requerido para Autoplay) */}
+                  playsInline              {/* Força reprodução INLINE */}
+                  controls
+                  disablepictureinpicture  {/* Ajuda a manter o vídeo na página */}
+                  controlsList="nodownload"
+                  webkit-playsinline="true"
+                  poster="https://via.placeholder.com/384x832/1e293b/ffffff?text=Clique+para+Ver+Demo"
                 >
                   <source src="https://ia600604.us.archive.org/19/items/whats-app-video-2025-10-11-at-12.11.29-feb-434ac/WhatsApp%20Video%202025-10-11%20at%2012.11.29_feb434ac.mp4" type="video/mp4" />
                   Seu navegador não suporta vídeos.
                 </video>
-                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-white px-6 py-3 rounded-full shadow-lg border-2 border-blue-600">
-                  <p className="text-sm font-bold text-slate-900">🎥 Demonstração em vídeo</p>
-                </div>
               </div>
             </div>
           </div>
