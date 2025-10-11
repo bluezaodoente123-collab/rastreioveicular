@@ -508,7 +508,7 @@ export default function DashboardPage() {
                     </div>
                     <div className="relative h-96 bg-slate-100">
                       <img 
-                        src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-car+3b82f6(${currentVehicle.lng},${currentVehicle.lat})/${currentVehicle.lng},${currentVehicle.lat},14,0/800x400@2x?access_token=pk.eyJ1IjoiZXhhbXBsZSIsImEiOiJjbGV4YW1wbGUifQ.example`}
+                        src={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s-car+3b82f6(${currentVehicle.lng},${currentVehicle.lat})/${currentVehicle.lng},${currentVehicle.lat},14,0/800x400@2x?access_token=pk.eyJ1IjoiZ2Fzc2RsaW5kIiwiYSI6ImNtZ21lZTBzczBpd2IyaXEybG55dGdmaXUifQ.-mQLqh4AKig_pLhzzmPxqQ`}
                         alt="Mapa"
                         className="w-full h-full object-cover"
                         onError={(e) => {
