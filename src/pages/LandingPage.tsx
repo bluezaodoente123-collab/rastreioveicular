@@ -107,12 +107,12 @@ export default function LandingPage() {
               <div className="relative max-w-sm mx-auto">
                 <video
                   className="relative rounded-3xl shadow-2xl w-full border-4 border-white cursor-pointer"
-                  autoPlay={true}          {/* AUTOPLAY LIGADO */}
+                  autoPlay={true}
                   loop
-                  muted                    {/* MUDO (Requerido para Autoplay) */}
-                  playsInline              {/* Força reprodução INLINE */}
+                  muted
+                  playsInline
                   controls
-                  disablepictureinpicture  {/* Ajuda a manter o vídeo na página */}
+                  disablepictureinpicture
                   controlsList="nodownload"
                   webkit-playsinline="true"
                   poster="https://via.placeholder.com/384x832/1e293b/ffffff?text=Clique+para+Ver+Demo"
