@@ -1,6 +1,57 @@
 import { MapPin, Shield, Clock, Bell, BarChart3, Users, CheckCircle, Star, Phone, Mail, Lock, Zap, Award, TrendingUp, Play } from 'lucide-react';
+import { useEffect } from 'react';
 
 export default function LandingPage() {
+  const PIXEL_ID = '2817802121743547';
+  const ACCESS_TOKEN = 'EAAHalB7ZCjOABPi3Rz2cLVPUJ7xP2VG04ncUeFkh6MGRhnyPJt9qLNb6TqG3Xh3W9k6RuYqVfZCwlr1fxeyenOUk2DAmcs4PNbIViBXYs3ZBILumpedZCpRSi9YG26BC1I7n6IArZB0wZBPMmymLlYnuJrD6Ejzc7JD8vFY8gbcsYiSiBd2oG9pIBC8F5qHgZDZD';
+
+  useEffect(() => {
+    const sendPageView = async () => {
+      try {
+        // Função para obter cookies
+        const getCookie = (name) => {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+          return null;
+        };
+
+        // Obter fbc e fbp dos cookies
+        const fbc = getCookie('_fbc');
+        const fbp = getCookie('_fbp');
+
+        const eventData = {
+          data: [
+            {
+              event_name: 'PageView',
+              event_time: Math.floor(Date.now() / 1000),
+              action_source: 'website',
+              event_source_url: window.location.href,
+              user_data: {
+                client_ip_address: '', // Will be filled by Facebook
+                client_user_agent: navigator.userAgent,
+                fbc: fbc || undefined,
+                fbp: fbp || undefined,
+              }
+            }
+          ]
+        };
+
+        await fetch(`https://graph.facebook.com/v18.0/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(eventData),
+        });
+      } catch (error) {
+        console.error('Erro ao enviar evento do pixel:', error);
+      }
+    };
+
+    sendPageView();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Navegação Fixa com backdrop blur */}
