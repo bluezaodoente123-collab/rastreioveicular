@@ -102,13 +102,15 @@ export default function LandingPage() {
 
           {/* Dashboard Preview com vídeo de demonstração */}
           <div id="video-demo" className="mt-20 relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 pointer-events-none"></div>
             <div className="relative flex justify-center">
               <div className="relative max-w-sm mx-auto">
                 <div className="relative">
                   <video
                     className="relative rounded-3xl shadow-2xl w-full border-4 border-white cursor-pointer"
                     controls
+                    autoPlay
+                    muted
+                    loop
                     playsInline
                     poster="https://via.placeholder.com/384x832/1e293b/ffffff?text=Carregando..."
                   >
